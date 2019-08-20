@@ -15,9 +15,6 @@ import javax.validation.Valid
 @CrossOrigin(origins= arrayOf(Global.ORIGIN1, Global.ORIGIN2, Global.ORIGIN3))
 class AppUserController(@Autowired private val appUserService: AppUserService){
 
-    @PostMapping("/createAdminUser")
-    fun createAdminUser(): ResponseEntity<Any> = appUserService.createUserAdmin()
-
     @PostMapping("/register")
     fun register(@RequestBody @Valid registerParams: JsonAppUserRegister) : ResponseEntity<Any> =
             ResponseEntity(appUserService.registerAppUser(registerParams), HttpStatus.OK)
@@ -33,4 +30,10 @@ class AppUserController(@Autowired private val appUserService: AppUserService){
 
     @PostMapping("/login")
     fun login(@RequestBody loginJson: LoginJson): ResponseEntity<Any> = ResponseEntity(appUserService.login(loginJson.username ,loginJson.password), HttpStatus.OK)
+
+    @PostMapping("/changePassword")
+    fun changePassword(@RequestBody changePassJson: LoginJson): ResponseEntity<Any> = ResponseEntity(appUserService.changePassword(changePassJson), HttpStatus.OK)
+
+    @GetMapping("/getRoles")
+    fun getRoles(): ResponseEntity<Any> = ResponseEntity(appUserService.getRoles(), HttpStatus.OK)
 }

@@ -10,7 +10,7 @@ data class ItemDAO(val itemCategory: ItemCategoryDAO,
                    val id: Int,
                    val title: String,
                    val description: String?,
-                   val amount: Double,
+                   val cost: Double,
                    val isActive: Boolean,
                    val createdOn: DateTime?,
                    val createdBy: String,
@@ -21,7 +21,7 @@ internal object Items : IntIdTable() {
     val itemCategoryId = reference("item_category_id", ItemCategories)
     val title = varchar("title", 50)
     val description = varchar("description", 150).nullable()
-    val amount = double("amount").default(0.0)
+    val cost = double("cost").default(0.0)
     val isActive = bool("is_active").default(true)
     val createdOn = datetime("created_on").nullable()
     val createdBy = varchar("created_by", 50).default("System")
@@ -35,7 +35,7 @@ internal class Item(id: EntityID<Int>) : Entity<Int>(id) {
     var itemCategory by ItemCategory referencedOn Items.itemCategoryId
     var title by Items.title
     var description by Items.description
-    var amount by Items.amount
+    var cost by Items.cost
     var isActive by Items.isActive
     var createdOn by Items.createdOn
     var createdBy by Items.createdBy
@@ -47,7 +47,7 @@ internal class Item(id: EntityID<Int>) : Entity<Int>(id) {
                 id.value,
                 title,
                 description,
-                amount,
+                cost,
                 isActive,
                 createdOn,
                 createdBy,

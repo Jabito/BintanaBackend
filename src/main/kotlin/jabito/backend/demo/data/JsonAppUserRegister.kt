@@ -13,7 +13,7 @@ class JsonAppUserRegister {
     @JsonProperty("email")
     var email: String = ""
     @JsonProperty("roleId")
-    var roleId: Int = 0
+    var roleId: Int = -1
     @JsonProperty("appUsername")
     var appUsername: String = ""
 }

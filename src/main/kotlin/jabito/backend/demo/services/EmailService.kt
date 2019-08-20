@@ -26,19 +26,24 @@ class EmailService {
                 "You have successfully registered your account. Please login using this temporary password : ${newPassword}")
     }
 
-    fun sendEmail(targetEmail: String, subject: String, message: String){
-
-        val email = HtmlEmail()
-        email.hostName = mailProperties.host
-        email.setSmtpPort(mailProperties.port.toInt())
-        email.setAuthenticator(DefaultAuthenticator(mailProperties.email, mailProperties.password))
-        email.isSSLOnConnect = true
-        email.setFrom(mailProperties.email)
-        email.addTo(targetEmail)
-        email.subject = subject
+    fun sendEmail(targetEmail: String?, subject: String, message: String){
+        if(null != targetEmail && !targetEmail.equals("")) {
+            val email = HtmlEmail()
+            email.hostName = mailProperties.host
+            email.setSmtpPort(mailProperties.port.toInt())
+            email.setAuthenticator(DefaultAuthenticator(mailProperties.email, mailProperties.password))
+            email.isSSLOnConnect = true
+            email.setFrom(mailProperties.email)
+            email.addTo(targetEmail)
+            email.subject = subject
 //        val kotlinLogoURL = URL("https://kotlinlang.org/assets/images/twitter-card/kotlin_800x320.png")
 //        val cid = email.embed(kotlinLogoURL, "Kotlin logo")
-        email.setHtmlMsg(message)
-        email.send()
+            email.setHtmlMsg(message)
+            email.send()
+        }
+    }
+
+    fun sendChangePassConfirmation(email: String?) {
+        sendEmail(email, "Change Password Success", "You have successfully changed your password.")
     }
 }
